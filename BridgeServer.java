@@ -27,7 +27,7 @@ public class BridgeServer extends Verticle {
     // Also serve the static resources. In real life this would probably be done by a CDN
     server.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
-        if (req.path().equals("/")) req.response().sendFile("index.html"); // Serve the index.html
+        if (req.path().equals("/")) req.response().sendFile("webroot/index.html"); // Serve the index.html
       }
     });
 
@@ -41,7 +41,7 @@ public class BridgeServer extends Verticle {
     sockJSServer.setHook(hook);
     sockJSServer.bridge(new JsonObject().putString("prefix", "/eventbus"), permitted, permitted);
     
-    server.listen(8080, 127.0.0.1);
+    server.listen(8080, "127.0.0.1");
     
     final EventBus eb = vertx.eventBus();
     final Random gerador = new Random();
