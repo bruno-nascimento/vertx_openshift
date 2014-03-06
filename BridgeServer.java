@@ -41,7 +41,11 @@ public class BridgeServer extends Verticle {
     sockJSServer.setHook(hook);
     sockJSServer.bridge(new JsonObject().putString("prefix", "/eventbus"), permitted, permitted);
     
-    server.listen(8080, "127.0.0.1");
+    
+    String host = System.getenv("OPENSHIFT_VERTX_IP");
+    String port = System.getenv("OPENSHIFT_VERTX_PORT");
+    
+    server.listen(port, host);
     
     final EventBus eb = vertx.eventBus();
     final Random gerador = new Random();
